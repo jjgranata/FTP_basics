@@ -7,7 +7,7 @@ ports = 60000
 socks.connect((hosts, ports))
 socks.send("Test")
 
-with open('received', 'written') as file:
+with open('received', 'wb') as file:
     print('open')
 
     while True:
