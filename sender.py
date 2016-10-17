@@ -7,13 +7,13 @@ host = socket.gethostname()
 s.bind((host, port))
 s.listen(5)
 
-print('Loading....')
+print("Loading....")
 
 while True:
     connection, address = s.accept()
-    print('Connection address:', address)
+    print("Connection address:", address)
     chunks = connection.recv(1024)
-    print('Loaded', repr(chunks))
+    print("Loaded", repr(chunks))
 
     filename = 'my-test.txt'
     file = open(filename, 'rb')
@@ -21,12 +21,12 @@ while True:
 
     while buffer:
         connection.send(buffer)
-        print('Sent ', repr(buffer))
+        print("Sent ", repr(buffer))
         buffer = file.read(1024)
     file.close()
 
-    print('Done')
+    print("Done")
 
-    connection.send('Exiting')
+    connection.send("Exiting")
 
     connection.close()
