@@ -27,6 +27,6 @@ while True:
 
     print("Done")
 
-    connection.send("Exiting")
+    connection.send(bytes('Exiting', 'UTF-8'))
 
-    connection.close()
+    connection.close()                  #socket.shutdown()

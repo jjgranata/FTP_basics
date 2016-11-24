@@ -4,6 +4,7 @@ import hashlib
 import os
 import getpass
 
+p1= getpass.getuser()
 p = getpass.getpass()
 salt = os.urandom(16)
 

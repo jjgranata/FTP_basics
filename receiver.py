@@ -5,7 +5,7 @@ hosts = socket.gethostname()
 ports = 60000
 
 socks.connect((hosts, ports))
-socks.send('Test')
+socks.send(bytes('Test', 'UTF-8'))
 
 with open("received", 'wb') as file:
     print("open")
