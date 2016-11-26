@@ -1,32 +1,52 @@
 import socket
 
-port = 60000
-s = socket.socket()
+credentials = {}
 
-host = socket.gethostname()
-s.bind((host, port))
-s.listen(5)
+with open('user_pass.txt', 'r') as f:
 
-print("Loading....")
+    for line in f:
+        user, pwd = line.strip().split(':')
+        credentials[user] = pwd
 
-while True:
-    connection, address = s.accept()
-    print("Connection address:", address)
-    chunks = connection.recv(1024)
-    print("Loaded", repr(chunks))
+username = input("Enter your username")
 
-    filename = 'my-test.txt'
-    file = open(filename, 'rb')
-    buffer = file.read(1024)
+if username in credentials:
 
-    while buffer:
-        connection.send(buffer)
-        print("Sent ", repr(buffer))
-        buffer = file.read(1024)
-    file.close()
+    password = input("Enter pwd")
+    if credentials[username] == password:
 
-    print("Done")
+        port = 60000
+        s = socket.socket()
 
-    connection.send(bytes('Exiting', 'UTF-8'))
+        host = socket.gethostname()
+        s.bind((host, port))
+        s.listen(5)
 
-    connection.close()                  #socket.shutdown()
+        print("Loading....")
+
+        while True:
+            connection, address = s.accept()
+            print("Connection address:", address)
+            chunks = connection.recv(1024)
+            print("Loaded", repr(chunks))
+
+            filename = 'my-test.txt'
+            file = open(filename, 'rb')
+            buffer = file.read(1024)
+
+            while buffer:
+                connection.send(buffer)
+                print("Sent ", repr(buffer))
+                buffer = file.read(1024)
+            file.close()
+
+            print("Done")
+
+            connection.send(bytes('Exiting', 'UTF-8'))
+
+            connection.close()  # socket.shutdown()
+
+    else:
+        print("Pwd invalid")
+else:
+    print("Username invalid")
